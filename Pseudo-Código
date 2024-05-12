@@ -1,0 +1,28 @@
+INÍCIO
+  DECLARE xn, xn1, zn, lambda, gamma, a, b COMO NÚMEROS REAIS
+  DECLARE i COMO INTEIRO
+  i = 0
+  CRIE um objeto Scanner chamado ler para ler a entrada do usuário
+  IMPRIMA "informe o valor de a:"
+  LEIA a
+  IMPRIMA "informe o valor de b:"
+  LEIA b
+  IMPRIMA "informe o valor de lambda:"
+  LEIA lambda
+  IMPRIMA "informe o valor de gamma:"
+  LEIA gamma
+  IMPRIMA "informe o valor de xn:"
+  LEIA xn
+  ENQUANTO VERDADEIRO FAÇA
+    zn = ((2 * a * gamma + 1) / (2 * a * lambda + 1)) * xn - ((lambda - gamma) * b) / (2 * a  * lambda + 1)
+    xn1 = zn - (gamma / (lambda - gamma)) * (xn - zn)
+    IMPRIMA "Para x" + i + "= " + xn + ", temos" + " x" + (i + 1) + "= " + xn1
+    i = i + 1
+    SE |xn1 - xn| <= 1.4 * 10^-45 ENTÃO
+      PARE
+    FIM SE
+    SE xn != xn1 ENTÃO
+      xn = xn1
+    FIM SE
+  FIM ENQUANTO
+FIM
