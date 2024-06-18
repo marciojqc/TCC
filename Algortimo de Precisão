@@ -1,0 +1,83 @@
+import java.math.BigDecimal;
+import java.util.InputMismatchException;
+import java.util.Scanner;
+
+public class Algoritmo3 {
+    public static void main(String[] args) {
+        BigDecimal xn, xn1, zn, lambda, gamma, a, b;
+        int i = 0;
+
+        try (Scanner ler = new Scanner(System.in)) {
+            // Loop para garantir que todos os valores sejam números reais e positivos
+            while (true) {
+                try {
+                    System.out.print("Informe o valor de a: ");
+                    a = ler.nextBigDecimal();
+                    if (a.compareTo(BigDecimal.ZERO) <= 0) {
+                        System.out.println("a deve ser maior que zero. Tente novamente.");
+                        continue;
+                    }
+                    
+                    System.out.print("Informe o valor de b: ");
+                    b = ler.nextBigDecimal();
+                    System.out.print("Informe o valor de lambda: ");
+                    lambda = ler.nextBigDecimal();
+                    if (lambda.compareTo(BigDecimal.ZERO) <= 0) {
+                        System.out.println("lambda deve ser maior que zero. Tente novamente.");
+                        continue;
+                    }
+                    
+                    System.out.print("Informe o valor de gamma: ");
+                    gamma = ler.nextBigDecimal();
+                    if (gamma.compareTo(BigDecimal.ZERO) <= 0) {
+                        System.out.println("gamma deve ser maior que zero. Tente novamente.");
+                        continue;
+                    }
+                    
+                    System.out.print("Informe o valor de xn: ");
+                    xn = ler.nextBigDecimal();
+
+                    // Verifica se todos os valores são números reais válidos e positivos
+                    break; // Sai do loop se todos os valores forem válidos
+                } catch (InputMismatchException | NumberFormatException e) {
+                    System.out.println("Erro: Por favor, insira um número real válido.");
+                    ler.nextLine(); // Limpa o buffer do Scanner
+                }
+            }
+
+            // Loop para garantir que lambda seja maior que 2*gamma
+            while (true) {
+                if (lambda.compareTo(gamma.multiply(new BigDecimal(2))) <= 0) {
+                    System.out.println("lambda deve ser maior que 2*gamma. Tente novamente.");
+                    System.out.print("Informe o valor de lambda: ");
+                    lambda = ler.nextBigDecimal();
+                    continue;
+                }
+
+                break; // Sai do loop se lambda estiver correto
+            }
+        }
+
+        while (true) {
+            zn = (((new BigDecimal(2).multiply(a).multiply(gamma).add(BigDecimal.ONE))
+                    .divide(new BigDecimal(2).multiply(a).multiply(lambda).add(BigDecimal.ONE), 20, BigDecimal.ROUND_HALF_UP))
+                    .multiply(xn))
+                    .subtract((lambda.subtract(gamma).multiply(b))
+                            .divide(new BigDecimal(2).multiply(a).multiply(lambda).add(BigDecimal.ONE), 20, BigDecimal.ROUND_HALF_UP));
+
+            xn1 = zn.subtract(gamma.divide(lambda.subtract(gamma), 20, BigDecimal.ROUND_HALF_UP).multiply(xn.subtract(zn)));
+
+            System.out.println("Para x" + i + "= " + xn + ", temos" +"x" + (i + 1) + "= " + xn1 + "\n");
+
+            i = i + 1;
+
+            if (xn1.subtract(xn).abs().compareTo(new BigDecimal("1.4E-45")) <= 0) {
+                break;
+            }
+
+            if (!xn.equals(xn1)) {
+                xn = xn1;
+            }
+        }
+    }
+}
