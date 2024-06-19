@@ -4,31 +4,38 @@ public class Algoritmo {
     public static void main(String[] args) {
         float xn, xn1, zn, lambda, gamma, a, b;
         int i = 0;
+        float tol = (float) (1.4 * Math.pow(10, -45)); // Tolerância para o erro absoluto
         
         try (Scanner ler = new Scanner(System.in)) {
-            System.out.printf("informe o valor de a:"); 
+            System.out.printf("Informe o valor de a: ");
             a = ler.nextFloat();
-            System.out.printf("informe o valor de b:"); 
+            System.out.printf("Informe o valor de b: ");
             b = ler.nextFloat();
-            System.out.printf("informe o valor de lambda:"); 
+            System.out.printf("Informe o valor de lambda: ");
             lambda = ler.nextFloat();
-            System.out.printf("informe o valor de gamma:"); 
+            System.out.printf("Informe o valor de gamma: ");
             gamma = ler.nextFloat();
-            System.out.printf("informe o valor de xn:"); 
+            System.out.printf("Informe o valor de xn: ");
             xn = ler.nextFloat();
         }
+        
         while (true) {
             zn = ((2 * a * gamma + 1) / (2 * a * lambda + 1)) * xn -
                  ((lambda - gamma) * b) / (2 * a * lambda + 1);
             xn1 = zn - (gamma / (lambda - gamma)) * (xn - zn);
-            System.out.println("Para x" + i + "= " + xn + ", temos" +"x" + (i + 1) + "= " + xn1 + "\n");
-            i = i + 1;
-            if (Math.abs(xn1 - xn) <= (1.4 * Math.pow(10, -45))) {
-                break; 
+            System.out.println("Para x" + i + " = " + xn + ", temos x" + (i + 1) + " = " + xn1 + "\n");
+            i = i + 1; //atualiza o índice dos termos da sequência 
+            
+            float abserr = Math.abs(xn1 - xn);
+            float relerr = abserr / Math.abs(xn1);
+            
+            // Condição de parada: ambas as condições devem ser satisfeitas
+            if (abserr <= tol && relerr <= tol) {
+                break;
             }
-            if (xn != xn1) {
-                xn = xn1; 
-            }
+
+            // Atualiza xn para a próxima iteração
+            xn = xn1;
         }
     }
 }
