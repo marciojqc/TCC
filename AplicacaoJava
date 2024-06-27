@@ -29,8 +29,8 @@ public class Algoritmo {
             float abserr = Math.abs(xn1 - xn);
             float relerr = abserr / Math.abs(xn1);
             
-            // Condição de parada: ambas as condições devem ser satisfeitas
-            if (abserr <= tol && relerr <= tol) {
+            // Condição de parada: uma das condições deve ser satisfeita
+            if (abserr <= tol || relerr <= tol) {
                 break;
             }
 
