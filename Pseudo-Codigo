@@ -1,28 +1,53 @@
 INÍCIO
+  // Declaração de variáveis
   DECLARE xn, xn1, zn, lambda, gamma, a, b COMO NÚMEROS REAIS
   DECLARE i COMO INTEIRO
   i = 0
+  DECLARE tol COMO NÚMERO REAL
+  tol = 1.4 * 10^-45 // Tolerância para o erro absoluto
+
+  // Criação do objeto para leitura de entrada do usuário
   CRIE um objeto Scanner chamado ler para ler a entrada do usuário
-  IMPRIMA "informe o valor de a:"
+
+  // Leitura de valores
+  IMPRIMA "Informe o valor de a:"
   LEIA a
-  IMPRIMA "informe o valor de b:"
+  IMPRIMA "Informe o valor de b:"
   LEIA b
-  IMPRIMA "informe o valor de lambda:"
+  IMPRIMA "Informe o valor de lambda:"
   LEIA lambda
-  IMPRIMA "informe o valor de gamma:"
+  IMPRIMA "Informe o valor de gamma:"
   LEIA gamma
-  IMPRIMA "informe o valor de xn:"
+  IMPRIMA "Informe o valor de xn:"
   LEIA xn
+
+  // Laço principal
   ENQUANTO VERDADEIRO FAÇA
+    // Cálculo de zn e xn1
     zn = ((2 * a * gamma + 1) / (2 * a * lambda + 1)) * xn - ((lambda - gamma) * b) / (2 * a  * lambda + 1)
     xn1 = zn - (gamma / (lambda - gamma)) * (xn - zn)
-    IMPRIMA "Para x" + i + "= " + xn + ", temos" + " x" + (i + 1) + "= " + xn1
+
+    // Impressão dos resultados
+    IMPRIMA "Para x" + i + "= " + xn + ", temos x" + (i + 1) + "= " + xn1
+
+    // Incremento do índice
     i = i + 1
-    SE |xn1 - xn| <= 1.4 * 10^-45 ENTÃO
+
+    // Cálculo do erro absoluto
+    DECLARE abserr COMO NÚMERO REAL
+    abserr = |xn1 - xn|
+
+    // Cálculo do erro relativo
+    DECLARE relerr COMO NÚMERO REAL
+    relerr = abserr / |xn1|
+
+    // Condição de parada
+    SE abserr <= tol OU relerr <= tol ENTÃO
       PARE
     FIM SE
-    SE xn != xn1 ENTÃO
-      xn = xn1
-    FIM SE
+
+    // Atualização do valor de xn
+    xn = xn1
+
   FIM ENQUANTO
 FIM
